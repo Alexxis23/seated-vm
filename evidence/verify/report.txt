@@ -1,0 +1,161 @@
+==============================================================================
+STEP 1: per-fixture fonts-zone verification (independent implementation)
+==============================================================================
+  base.bin         zone@ 55 (expect 55) derot==digest:True reenc==zone:True perpos:True unique:True -> PASS
+       digest=fcdd222503da..61d71645  model=Chromium-131.0.0.0::Google Chrome-131.0.6830.0
+  s1.bin           zone@ 52 (expect 52) derot==digest:True reenc==zone:True perpos:True unique:True -> PASS
+       digest=fcdd222503da..61d71645  model=Chromium-131.0.0.0::Google Chrome-131.0.6830.0
+  s2.bin           zone@ 57 (expect 57) derot==digest:True reenc==zone:True perpos:True unique:True -> PASS
+       digest=0f67098ac5de..d5ad3b43  model=Chromium-131.0.0.0::Google Chrome-131.0.6830.0
+  s3.bin           zone@ 53 (expect 53) derot==digest:True reenc==zone:True perpos:True unique:True -> PASS
+       digest=7d074411639e..d7e1310f  model=Chromium-131.0.0.0::Google Chrome-131.0.6830.0
+  s4.bin           zone@ 55 (expect 55) derot==digest:True reenc==zone:True perpos:True unique:True -> PASS
+       digest=fcdd222503da..61d71645  model=Chromium-131.0.0.0::Google Chrome-131.0.6830.0
+  s5.bin           zone@ 58 (expect 58) derot==digest:True reenc==zone:True perpos:True unique:True -> PASS
+       digest=fcdd222503da..61d71645  model=Chromium-131.0.0.0::Google Chrome-131.0.6830.0
+  s6.bin           zone@ 61 (expect 61) derot==digest:True reenc==zone:True perpos:True unique:True -> PASS
+       digest=fcdd222503da..61d71645  model=Chromium-131.0.0.0::Google Chrome-131.0.6830.0
+  s7.bin           zone@ 55 (expect 55) derot==digest:True reenc==zone:True perpos:True unique:True -> PASS
+       digest=003d10514cdd..b2db78bf  model=Chromium-131.0.0.0::Google Chrome-131.0.6830.0
+  real_input.bin   zone@ 63 (expect 63) derot==digest:True reenc==zone:True perpos:True unique:True -> PASS
+       digest=61052e74ac13..00ecee30  model=Chromium-156.0.8078.80::Google Chrome-156.0.8078.80::Not:A-Brand-8.0.0.0
+  digest0.bin      zone@ 63 (expect 63) derot==digest:True reenc==zone:True perpos:True unique:True -> PASS
+       digest=000000000000..00000000  model=Chromium-156.0.8078.80::Google Chrome-156.0.8078.80::Not:A-Brand-8.0.0.0
+  digest1.bin      zone@ 63 (expect 63) derot==digest:True reenc==zone:True perpos:True unique:True -> PASS
+       digest=ffffffffffff..ffffffff  model=Chromium-156.0.8078.80::Google Chrome-156.0.8078.80::Not:A-Brand-8.0.0.0
+  digest2.bin      zone@ 63 (expect 63) derot==digest:True reenc==zone:True perpos:True unique:True -> PASS
+       digest=0123456789ab..89abcdef  model=Chromium-156.0.8078.80::Google Chrome-156.0.8078.80::Not:A-Brand-8.0.0.0
+  digest3.bin      zone@ 63 (expect 63) derot==digest:True reenc==zone:True perpos:True unique:True -> PASS
+       digest=aaaaaaaabbbb..dddddddd  model=Chromium-156.0.8078.80::Google Chrome-156.0.8078.80::Not:A-Brand-8.0.0.0
+  digest4.bin      zone@ 63 (expect 63) derot==digest:True reenc==zone:True perpos:True unique:True -> PASS
+       digest=61052e74ac13..00ecee30  model=Chromium-156.0.8078.80::Google Chrome-156.0.8078.80::Not:A-Brand-8.0.0.0
+
+PER-FIXTURE PASS/FAIL TABLE:
+  base.bin         PASS  zone@55
+  s1.bin           PASS  zone@52
+  s2.bin           PASS  zone@57
+  s3.bin           PASS  zone@53
+  s4.bin           PASS  zone@55
+  s5.bin           PASS  zone@58
+  s6.bin           PASS  zone@61
+  s7.bin           PASS  zone@55
+  real_input.bin   PASS  zone@63
+  digest0.bin      PASS  zone@63
+  digest1.bin      PASS  zone@63
+  digest2.bin      PASS  zone@63
+  digest3.bin      PASS  zone@63
+  digest4.bin      PASS  zone@63
+  OVERALL: ALL PASS
+
+==============================================================================
+STEP 2: char->rotation maps from base.bin and real_input.bin zones
+==============================================================================
+--- base.bin: 19 unambiguous model-chars, 8 ambiguous positions
+    '-'    byte=0x2d k=[3] predict=3 OK
+    '.'    byte=0x2e k=[2] predict=2 OK
+    '0'    byte=0x30 k=[0] predict=0 OK
+    '1'    byte=0x31 k=[7] predict=7 OK
+    '3'    byte=0x33 k=[5] predict=5 OK
+    '6'    byte=0x36 k=[2] predict=2 OK
+    '8'    byte=0x38 k=[0] predict=0 OK
+    ':'    byte=0x3a k=[6] predict=6 OK
+    'C'    byte=0x43 k=[5] predict=5 OK
+    'G'    byte=0x47 k=[1] predict=1 OK
+    'e'    byte=0x65 k=[3] predict=3 OK
+    'g'    byte=0x67 k=[1] predict=1 OK
+    'h'    byte=0x68 k=[0] predict=0 OK
+    'i'    byte=0x69 k=[7] predict=7 OK
+    'l'    byte=0x6c k=[4] predict=4 OK
+    'm'    byte=0x6d k=[3] predict=3 OK
+    'o'    byte=0x6f k=[1] predict=1 OK
+    'r'    byte=0x72 k=[6] predict=6 OK
+    'u'    byte=0x75 k=[3] predict=3 OK
+    ambiguous positions: 8, claimed-k inside candidates: 8
+      e.g. pos  0 model-char 'C' candidates [1, 5] claimed 5
+      e.g. pos  9 model-char '1' candidates [3, 7] claimed 7
+      e.g. pos 19 model-char ':' candidates [2, 6] claimed 6
+      e.g. pos 21 model-char 'o' candidates [1, 5] claimed 1
+      e.g. pos 26 model-char ' ' candidates [0, 4] claimed 0
+      e.g. pos 27 model-char 'C' candidates [1, 5] claimed 5
+    -> base.bin map: ALL k == (-byte)&7
+--- real_input.bin: 26 unambiguous model-chars, 10 ambiguous positions
+    ' '    byte=0x20 k=[0] predict=0 OK
+    '-'    byte=0x2d k=[3] predict=3 OK
+    '.'    byte=0x2e k=[2] predict=2 OK
+    '0'    byte=0x30 k=[0] predict=0 OK
+    '1'    byte=0x31 k=[7] predict=7 OK
+    '5'    byte=0x35 k=[3] predict=3 OK
+    '6'    byte=0x36 k=[2] predict=2 OK
+    '7'    byte=0x37 k=[1] predict=1 OK
+    '8'    byte=0x38 k=[0] predict=0 OK
+    ':'    byte=0x3a k=[6] predict=6 OK
+    'A'    byte=0x41 k=[7] predict=7 OK
+    'B'    byte=0x42 k=[6] predict=6 OK
+    'C'    byte=0x43 k=[5] predict=5 OK
+    'G'    byte=0x47 k=[1] predict=1 OK
+    'a'    byte=0x61 k=[7] predict=7 OK
+    'd'    byte=0x64 k=[4] predict=4 OK
+    'e'    byte=0x65 k=[3] predict=3 OK
+    'g'    byte=0x67 k=[1] predict=1 OK
+    'h'    byte=0x68 k=[0] predict=0 OK
+    'i'    byte=0x69 k=[7] predict=7 OK
+    'l'    byte=0x6c k=[4] predict=4 OK
+    'm'    byte=0x6d k=[3] predict=3 OK
+    'o'    byte=0x6f k=[1] predict=1 OK
+    'r'    byte=0x72 k=[6] predict=6 OK
+    't'    byte=0x74 k=[4] predict=4 OK
+    'u'    byte=0x75 k=[3] predict=3 OK
+    ambiguous positions: 10, claimed-k inside candidates: 10
+      e.g. pos 11 model-char '6' candidates [2, 6] claimed 2
+      e.g. pos 20 model-char '8' candidates [0, 4] claimed 0
+      e.g. pos 21 model-char '0' candidates [0, 4] claimed 0
+      e.g. pos 32 model-char 'h' candidates [0, 4] claimed 0
+      e.g. pos 35 model-char 'm' candidates [3, 7] claimed 3
+      e.g. pos 38 model-char '1' candidates [3, 7] claimed 7
+    -> real_input.bin map: ALL k == (-byte)&7
+
+shared model chars (18):
+  '-'    base=[3] real=[3] predict=3 OK
+  '.'    base=[2] real=[2] predict=2 OK
+  '0'    base=[0] real=[0] predict=0 OK
+  '1'    base=[7] real=[7] predict=7 OK
+  '6'    base=[2] real=[2] predict=2 OK
+  '8'    base=[0] real=[0] predict=0 OK
+  ':'    base=[6] real=[6] predict=6 OK
+  'C'    base=[5] real=[5] predict=5 OK
+  'G'    base=[1] real=[1] predict=1 OK
+  'e'    base=[3] real=[3] predict=3 OK
+  'g'    base=[1] real=[1] predict=1 OK
+  'h'    base=[0] real=[0] predict=0 OK
+  'i'    base=[7] real=[7] predict=7 OK
+  'l'    base=[4] real=[4] predict=4 OK
+  'm'    base=[3] real=[3] predict=3 OK
+  'o'    base=[1] real=[1] predict=1 OK
+  'r'    base=[6] real=[6] predict=6 OK
+  'u'    base=[3] real=[3] predict=3 OK
+  MAP CONSISTENCY: CONSISTENT, all shared chars k == (-byte)&7
+
+==============================================================================
+STEP 3: zone offsets vs documented buffer prefixes
+==============================================================================
+layout: [appVersion rol2][tz raw][manufacturer ror1][osType bitrev][03 00 00 00][arch rol2][FONTS ZONE 64]
+  base.bin         documented-prefix-len= 55 zone@ 55 av:True tz:True man:True os:True marker:True arch:True -> OK
+  s1.bin           documented-prefix-len= 52 zone@ 52 av:True tz:True man:True os:True marker:True arch:True -> OK
+  s2.bin           documented-prefix-len= 57 zone@ 57 av:True tz:True man:True os:True marker:True arch:True -> OK
+  s3.bin           documented-prefix-len= 53 zone@ 53 av:True tz:True man:True os:True marker:True arch:True -> OK
+  s4.bin           documented-prefix-len= 55 zone@ 55 av:True tz:True man:True os:True marker:True arch:True -> OK
+  s5.bin           documented-prefix-len= 58 zone@ 58 av:True tz:True man:True os:True marker:True arch:True -> OK
+  s6.bin           documented-prefix-len= 61 zone@ 61 av:True tz:True man:True os:True marker:True arch:True -> OK
+  s7.bin           documented-prefix-len= 55 zone@ 55 av:True tz:True man:True os:True marker:True arch:True -> OK
+  real_input.bin   documented-prefix-len= 63 zone@ 63 av:True tz:True man:True os:True marker:True arch:True -> OK
+  digest0.bin      documented-prefix-len= 63 zone@ 63 av:True tz:True man:True os:True marker:True arch:True -> OK
+  digest1.bin      documented-prefix-len= 63 zone@ 63 av:True tz:True man:True os:True marker:True arch:True -> OK
+  digest2.bin      documented-prefix-len= 63 zone@ 63 av:True tz:True man:True os:True marker:True arch:True -> OK
+  digest3.bin      documented-prefix-len= 63 zone@ 63 av:True tz:True man:True os:True marker:True arch:True -> OK
+  digest4.bin      documented-prefix-len= 63 zone@ 63 av:True tz:True man:True os:True marker:True arch:True -> OK
+
+  BASE ARITHMETIC: 5('1.2.3') + 13('Europe/Warsaw') + 23('Chromium::Google Chrome') + 7('Windows') + 4(marker) + 3('x86') = 55 (== base zone@55)
+
+==============================================================================
+FINAL VERDICT: CLAIM VERIFIED - all independent checks pass
+==============================================================================
