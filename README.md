@@ -33,11 +33,11 @@ Current: [`sdk/0.3.2`](../../tree/sdk/0.3.2) — Prelude core 0.3.2
 ## Use in your bot
 
 ```
-go get github.com/seated-vm/seated-vm
+go get github.com/Alexxis23/seated-vm
 ```
 
 ```go
-import seatedvm "github.com/seated-vm/seated-vm"
+import seatedvm "github.com/Alexxis23/seated-vm"
 
 p := &seatedvm.Params{
     TZ:          "Europe/Warsaw",

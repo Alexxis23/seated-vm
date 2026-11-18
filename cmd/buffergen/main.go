@@ -9,7 +9,7 @@ import (
 	"fmt"
 	"os"
 
-	seatedvm "github.com/seated-vm/seated-vm"
+	seatedvm "github.com/Alexxis23/seated-vm"
 )
 
 func main() {
