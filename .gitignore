@@ -1,0 +1,10 @@
+# workspace scratch (research outputs live in branches, not main)
+/out/
+/bot/
+*.exe
+buf.bin
+*.bin.hh
+*.bin.hh2
+__pycache__/
+*.pyc
+/.gitattrs

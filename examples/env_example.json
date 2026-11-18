@@ -1,0 +1,28 @@
+{
+ "tz": "Europe/Warsaw",
+ "fullVersionList": [
+  {
+   "brand": "Not:A-Brand",
+   "version": "8.0.0.0"
+  },
+  {
+   "brand": "Chromium",
+   "version": "156.0.8078.80"
+  },
+  {
+   "brand": "Google Chrome",
+   "version": "156.0.8078.80"
+  }
+ ],
+ "fontsDigest": "61052e74ac13cb864ce5331005cdc65836d3c6f1532abf520ae52fa200ecee30",
+ "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36",
+ "locale": "pl-PL",
+ "connection": {
+  "rtt": 130,
+  "type": "wifi"
+ },
+ "granted": [
+  "payment-handler",
+  "gyroscope"
+ ]
+}
