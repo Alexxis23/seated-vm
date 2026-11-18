@@ -244,8 +244,19 @@ type Params struct {
 	Automation   bool
 	Notification string // "default" | "granted" | "denied"
 
+	// PostPluginsFlag: the single bitrev'd boolean byte immediately after the
+	// plugins digest (semantics TBD; observed 1 in real Chrome/Electron
+	// captures, 0 under some automation profiles).
+	PostPluginsFlag bool
+
 	Granted  []string // permission names with state 1 (others 3)
 	Throwing []string // permission names ABSENT from the buffer (query threw)
+
+	// PermissionStates, when non-nil, overrides the Granted/3 mapping with
+	// explicit per-name states (1=granted, 2=?, 3=prompt — the values the
+	// real browser writes into the buffer, ror1'd per entry). Names absent
+	// from the map fall back to the Granted/3 rule.
+	PermissionStates map[string]byte
 }
 
 // Defaults fills a Chrome-156-like profile into p (only fills empty fields).
@@ -376,7 +387,11 @@ func (p *Params) Build() []byte {
 	}
 	out = append(out, mapBytes(p.MediaDigest, bitrevTable)...)
 	out = append(out, mapBytes(p.PluginsDigest, bitrevTable)...)
-	put(0)
+	if p.PostPluginsFlag {
+		put(bitrevTable[1])
+	} else {
+		put(0)
+	}
 	out = append(out, mapBytes(id.SystemName, ror2Table)...)
 	putStr(p.Hostname)
 	out = append(out, mapBytes(p.Arch, rol2Table)...)
@@ -416,6 +431,11 @@ func (p *Params) Build() []byte {
 		state := byte(3)
 		if granted[n] {
 			state = 1
+		}
+		if p.PermissionStates != nil {
+			if s, ok := p.PermissionStates[n]; ok {
+				state = s
+			}
 		}
 		put(0, 0, 0, ror1Table[state])
 	}

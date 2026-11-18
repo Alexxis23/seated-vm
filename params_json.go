@@ -100,6 +100,19 @@ func ParamsFromJSON(j map[string]any) *Params {
 			}
 		}
 	}
+	// Explicit per-name permission states (1=granted, 2/3 per the browser's
+	// own enum) — overrides the granted/3 rule per name.
+	if ps, ok := j["permissionStates"].(map[string]any); ok {
+		p.PermissionStates = map[string]byte{}
+		for name, v := range ps {
+			if f, ok := v.(float64); ok {
+				p.PermissionStates[name] = byte(f)
+			}
+		}
+	}
+	if ppf, ok := j["postPluginsFlag"].(bool); ok {
+		p.PostPluginsFlag = ppf
+	}
 	return p
 }
 

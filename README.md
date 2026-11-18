@@ -84,8 +84,20 @@ go test ./...
 
 ## Note on f9.f2
 
-The literal `f9.f2` bytes of a real browser capture include a second-stage
-hash over runtime-allocation-dependent map bytes, so they are not fully
-reproducible from payload values alone. `HH(buffer)` and `HH(HH(buffer))`
-here are the deterministic parts and match the SDK byte-exactly. Details in
-the doc.
+**`f9.f2 = HighwayHash128(Params.Build())` — a single hash, byte-exact.**
+
+Verified against a live browser by swapping the SDK's embedded wasm for an
+instrumented build that logs both HighwayHash input spans: the builder
+reproduces the real hash-input buffer byte-for-byte (all buffer inputs are
+visible in the signals payload — viewport, per-name permission states,
+notification string, and the rest of `Params`), and the single HH-128
+digest equals the browser's own f9.f2.
+
+The wasm contains a second HighwayHash stage (`h1 ‖ X`), but its input slot
+is statically and empirically dead (a permanently-`None` Option) — its
+output never reaches the payload. Earlier hypotheses about runtime-map
+bytes do not apply to core 0.3.2.
+
+`PermissionStates` (per-name values, ror1-encoded per entry) and
+`PostPluginsFlag` are required for byte-exactness; see `Params` and the
+env JSON keys `permissionStates` / `postPluginsFlag`.
