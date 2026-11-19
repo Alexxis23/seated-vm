@@ -1,6 +1,7 @@
 # workspace scratch (research outputs live in branches, not main)
 /out/
 /bot/
+/harness_tmp/
 *.exe
 buf.bin
 *.bin.hh

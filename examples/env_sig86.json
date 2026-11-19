@@ -1,0 +1,33 @@
+{
+  "tz": "Europe/Warsaw",
+  "fullVersionList": [
+    { "brand": "Not:A-Brand", "version": "8.0.0.0" },
+    { "brand": "Chromium", "version": "156.0.8078.80" },
+    { "brand": "Google Chrome", "version": "156.0.8078.80" }
+  ],
+  "osType": "Windows",
+  "arch": "x86",
+  "fontsDigest": "61052e74ac13cb864ce5331005cdc65836d3c6f1532abf520ae52fa200ecee30",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36",
+  "locale": "pl-PL",
+  "languages": ["pl-PL", "pl", "en-US", "en"],
+  "hardwareConcurrency": 4,
+  "deviceMemory": 16,
+  "screen": [1920, 1080],
+  "inner": [958, 896],
+  "devicePixelRatio": 1.0,
+  "connection": { "rtt": 200 },
+  "cookies": true,
+  "localStorage": true,
+  "indexedDB": true,
+  "multiTouch": false,
+  "mediaDigest": "0607b220ecb0c6fe48506008a804d0d8a7eb64cf6ea168f241c590575ae88a01",
+  "pluginsDigest": "0382071da078da8ea4375d7681b9138b86deb8023303ef804196ec3c0f78e80a",
+  "hostname": "go.seated.com",
+  "osRelease": "10.0.0",
+  "automation": false,
+  "notification": "default",
+  "granted": ["payment-handler", "gyroscope", "clipboard-write", "screen-wake-lock", "accelerometer", "background-sync", "storage-access", "magnetometer"],
+  "throwing": ["ambient-light-sensor", "bluetooth", "compute-pressure", "push", "top-level-storage-access"],
+  "postPluginsFlag": true
+}
