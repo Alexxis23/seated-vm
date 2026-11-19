@@ -40,15 +40,19 @@ func TestHighwayHash128(t *testing.T) {
 
 func TestGoldenBuffer(t *testing.T) {
 	// The sig86 environment, exactly as captured from the real browser.
+	// NOTE: this golden is the Node-harness capture (webGlEnabled byte = 0,
+	// i.e. PostPluginsFlag unset). A real headed Chrome has WebGL, so for
+	// browser-equivalent fingerprints set PostPluginsFlag: true — see
+	// doc/wasm_execution.md and TestWebGLByteHypothesis.
 	p := &Params{
-		TZ:     "Europe/Warsaw",
-		FVL:    []FVLEntry{{"Not:A-Brand", "8.0.0.0"}, {"Chromium", "156.0.8078.80"}, {"Google Chrome", "156.0.8078.80"}},
-		OSType: "Windows",
-		Arch:   "x86",
-		FontsDigest: "61052e74ac13cb864ce5331005cdc65836d3c6f1532abf520ae52fa200ecee30",
-		UserAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36",
-		Locale:    "pl-PL",
-		Languages: []string{"pl-PL", "pl", "en-US", "en"},
+		TZ:                  "Europe/Warsaw",
+		FVL:                 []FVLEntry{{"Not:A-Brand", "8.0.0.0"}, {"Chromium", "156.0.8078.80"}, {"Google Chrome", "156.0.8078.80"}},
+		OSType:              "Windows",
+		Arch:                "x86",
+		FontsDigest:         "61052e74ac13cb864ce5331005cdc65836d3c6f1532abf520ae52fa200ecee30",
+		UserAgent:           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36",
+		Locale:              "pl-PL",
+		Languages:           []string{"pl-PL", "pl", "en-US", "en"},
 		HardwareConcurrency: 4,
 		MemoryGiB:           16,
 		ScreenW:             1920,

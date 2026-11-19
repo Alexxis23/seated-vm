@@ -92,11 +92,11 @@ type FVLEntry struct {
 
 // FVLIdentity carries everything the buffer needs from fullVersionList.
 type FVLIdentity struct {
-	SystemName      string   // FVL[0].brand
-	SystemVersion   string   // FVL[0].version
-	Manufacturer    string   // sorted brands joined by "::"
-	Model           string   // sorted "brand-version" joined by "::"
-	Keystream       []byte   // fonts-zone rotations, derived from Model
+	SystemName    string // FVL[0].brand
+	SystemVersion string // FVL[0].version
+	Manufacturer  string // sorted brands joined by "::"
+	Model         string // sorted "brand-version" joined by "::"
+	Keystream     []byte // fonts-zone rotations, derived from Model
 }
 
 func FVLIdentityOf(fvl []FVLEntry) FVLIdentity {
@@ -203,12 +203,12 @@ var PermNames = []string{
 // the required fields (FontsDigest, UserAgent) is a valid Chrome-156-like
 // profile after Defaults() fills the optionals.
 type Params struct {
-	AppVersion  string    // optional; empty -> absent from buffer
-	TZ          string    // IANA timezone, e.g. "Europe/Warsaw"
-	FVL         []FVLEntry // fullVersionList (overrides the 4 explicit fields below)
-	Model       string    // explicit override (if FVL empty)
-	Manufacturer string
-	SystemName  string
+	AppVersion    string     // optional; empty -> absent from buffer
+	TZ            string     // IANA timezone, e.g. "Europe/Warsaw"
+	FVL           []FVLEntry // fullVersionList (overrides the 4 explicit fields below)
+	Model         string     // explicit override (if FVL empty)
+	Manufacturer  string
+	SystemName    string
 	SystemVersion string
 
 	OSType string // "Windows", "MacOS", ... (written bitrev'd)
@@ -223,9 +223,9 @@ type Params struct {
 	HardwareConcurrency uint32
 	MemoryGiB           uint32 // written as GiB/8
 
-	ScreenW, ScreenH   uint32 // physical
-	InnerW, InnerH     uint32 // window
-	DevicePixelRatio   float32
+	ScreenW, ScreenH uint32 // physical
+	InnerW, InnerH   uint32 // window
+	DevicePixelRatio float32
 
 	ConnType string // optional; presence adds 4 bytes to the buffer
 	RTT      uint32
@@ -244,19 +244,64 @@ type Params struct {
 	Automation   bool
 	Notification string // "default" | "granted" | "denied"
 
-	// PostPluginsFlag: the single bitrev'd boolean byte immediately after the
-	// plugins digest (semantics TBD; observed 1 in real Chrome/Electron
-	// captures, 0 under some automation profiles).
+	// MaybeHeadless is a payload-only field. NOTE: the real SDK collector
+	// (entry82.js _A.collect) NEVER assigns maybeHeadless — the property is
+	// absent (undefined) in real dispatches and the wasm skips its buffer
+	// byte entirely. Only set this if you are emulating an environment where
+	// the property exists. nil (the default) reproduces real captures.
+	MaybeHeadless *bool
+	// PostPluginsFlag is the single bitrev'd boolean byte immediately after
+	// the plugins digest. It is actually the SDK's webGlEnabled probe
+	// (verified by wasm-span spy: toggling webGlEnabled flips exactly this
+	// byte): 1 = WebGL context acquired (normal headed Chrome), 0 = headless
+	// / no-WebGL environments.
 	PostPluginsFlag bool
 
 	Granted  []string // permission names with state 1 (others 3)
 	Throwing []string // permission names ABSENT from the buffer (query threw)
 
 	// PermissionStates, when non-nil, overrides the Granted/3 mapping with
-	// explicit per-name states (1=granted, 2=?, 3=prompt — the values the
-	// real browser writes into the buffer, ror1'd per entry). Names absent
-	// from the map fall back to the Granted/3 rule.
+	// explicit per-name states (1=granted, 2=denied, 3=prompt — the values
+	// the real browser writes into the buffer, ror1'd per entry: 1→0x80,
+	// 2→0x01, 3→0x81). Names absent from the map fall back to the
+	// Granted/3 rule.
 	PermissionStates map[string]byte
+
+	// ---------- identity / metadata knobs (payload + headers, not hashed) ----------
+
+	// DispatchID overrides the payload's dispatch UUID (field 1 and the
+	// X-SDK-DispatchID header). Empty (default) -> a fresh UUID v7 is minted
+	// by the wasm itself from Date.now() + crypto.getRandomValues, exactly
+	// like the SDK's getDispatchId(). Supply one to replay/align payloads.
+	DispatchID string
+
+	// SDKVersion is the js-sdk version reported in sdkInfo and the
+	// X-SDK-User-Agent header ("Prelude/<SDKVersion> Core/<CoreVersion> (Web)").
+	// Empty -> "0.14.0" (the version embedded in the captured chunk).
+	SDKVersion string
+
+	// CoreVersion overrides the core version string (normally taken from the
+	// wasm's own get_version export, e.g. "0.3.2"). Only set when
+	// emulating a different SDK build.
+	CoreVersion string
+
+	// DevicePlatform is device.platform as sent to the wasm ("web" for every
+	// real browser dispatch). Empty -> "web".
+	DevicePlatform string
+
+	// Origin is device.hostname (window.location.origin). Never read by core
+	// 0.3.2 — kept for fidelity. Empty -> "https://"+Hostname.
+	Origin string
+
+	// CellularData is network.cellular_data (navigator.connection.type
+	// classification: true for "cellular", false for
+	// bluetooth/ethernet/none/wifi/wimax). nil (default) -> derived from
+	// ConnType; a connection with unknown/absent type leaves it undefined.
+	CellularData *bool
+
+	// ImplementedFeatures is application.implementedFeatures as collected by
+	// the SDK (always 0 in the captured bundle). Core 0.3.2 never reads it.
+	ImplementedFeatures uint32
 }
 
 // Defaults fills a Chrome-156-like profile into p (only fills empty fields).

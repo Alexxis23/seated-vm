@@ -78,6 +78,17 @@ func ParamsFromJSON(j map[string]any) *Params {
 	if mt, ok := j["multiTouch"].(bool); ok {
 		p.MultiTouch = mt
 	}
+	if mh, ok := j["maybeHeadless"].(bool); ok {
+		p.MaybeHeadless = &mh
+	}
+	// "postPluginsFlag" (buffer byte after the plugins digest) is the SDK's
+	// webGlEnabled probe; accept both JSON spellings.
+	if ppf, ok := j["postPluginsFlag"].(bool); ok {
+		p.PostPluginsFlag = ppf
+	}
+	if wg, ok := j["webGlEnabled"].(bool); ok {
+		p.PostPluginsFlag = wg
+	}
 	p.MediaDigest = getS("mediaDigest")
 	p.PluginsDigest = getS("pluginsDigest")
 	p.Hostname = getS("hostname")
@@ -112,6 +123,20 @@ func ParamsFromJSON(j map[string]any) *Params {
 	}
 	if ppf, ok := j["postPluginsFlag"].(bool); ok {
 		p.PostPluginsFlag = ppf
+	}
+	// Identity / metadata overrides (dispatch id, SDK versions, platform
+	// strings, connection classification). All optional; empty -> the wasm
+	// / SDK-accurate derivation is used.
+	p.DispatchID = getS("dispatchId")
+	p.SDKVersion = getS("sdkVersion")
+	p.CoreVersion = getS("coreVersion")
+	p.DevicePlatform = getS("devicePlatform")
+	p.Origin = getS("origin")
+	if cd, ok := j["cellularData"].(bool); ok {
+		p.CellularData = &cd
+	}
+	if f, ok := j["implementedFeatures"].(float64); ok {
+		p.ImplementedFeatures = uint32(f)
 	}
 	return p
 }
